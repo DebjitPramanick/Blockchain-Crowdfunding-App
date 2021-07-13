@@ -1,6 +1,9 @@
 pragma solidity >=0.4.21 <0.7.0;
 
+import "@openzeppelin/contracts/math/SafeMath.sol";
+
 contract CrowdFunding{
+    using SafeMath for uint256;
     Project[] private projects;
 
     event ProjectStarted(
@@ -20,14 +23,14 @@ contract CrowdFunding{
         uint amountToRaise
     ) external {
         uint raiseUntil = now.add(durationInDays.mul(1 days));
-        Project newProject = new Project(msg.sender, title, description, raiseUntill, amountToRaise);
+        Project newProject = new Project(msg.sender, title, desc, raiseUntil, amountToRaise);
         projects.push(newProject);
         emit ProjectStarted(
             address(newProject), 
             msg.sender, 
             title, 
-            description, 
-            raiseUntill, 
+            desc, 
+            raiseUntil, 
             amountToRaise
         );
     }
@@ -38,7 +41,7 @@ contract CrowdFunding{
 }
 
 contract Project{
-
+    using SafeMath for uint256;
     enum State { 
         Fundraising, 
         Expired,
@@ -48,7 +51,7 @@ contract Project{
     // State variables
 
     address payable public creator;
-    uint public amountGlobal;
+    uint public amountGoal;
     uint public raiseBy;
     uint public completeAt;
     uint256 public curBalance;
@@ -73,18 +76,33 @@ contract Project{
         _;
     }
 
-    function contribute() external inState(State.Fundraising) payable {
+    constructor(
+        address payable projectStarter,
+        string memory projectTitle,
+        string memory projectDesc,
+        uint fundRaisingDeadline,
+        uint goalAmount
+    ) public {
+        creator = projectStarter;
+        title = projectTitle;
+        description = projectDesc;
+        amountGoal = goalAmount;
+        raiseBy = fundRaisingDeadline;
+        curBalance = 0;
+    }
+
+    function contribute() external isState(State.Fundraising) payable {
         require(msg.sender != creator);
         contributions[msg.sender] = contributions[msg.sender].add(msg.value);
         curBalance = curBalance.add(msg.value);
         emit FundReceived(msg.sender, msg.value, curBalance);
-
+        checkIfFundingCompleted();
     }
 
     function checkIfFundingCompleted() public {
-        if(curBalance >= amountGlobal){
+        if(curBalance >= amountGoal){
             state = State.Successful;
-
+            payOut();
         }
         else if(now > raiseBy){
             state = State.Expired;
@@ -93,7 +111,7 @@ contract Project{
         completeAt = now;
     }
 
-    function payOut() internal inState(State.Successful) returns (bool) {
+    function payOut() internal isState(State.Successful) returns (bool) {
         uint256 totalRaised = curBalance;
         curBalance = 0;
 
@@ -108,7 +126,7 @@ contract Project{
         return false;
     }
 
-    function getRefund() public inState(State.Expired) returns (bool) {
+    function getRefund() public isState(State.Expired) returns (bool) {
         require(contributions[msg.sender] > 0);
 
         uint amount = contributions[msg.sender];
@@ -132,7 +150,7 @@ contract Project{
         uint256 deadline,
         State curState,
         uint256 curAmount,
-        uint256 globalAmount
+        uint256 goalAmount
     ){
         projectStarter = creator;
         projectTitle = title;
@@ -140,7 +158,7 @@ contract Project{
         deadline = raiseBy;
         curState = state;
         curAmount = curBalance;
-        globalAmount = amountGlobal;
+        goalAmount = amountGoal;
     }
 
 }
