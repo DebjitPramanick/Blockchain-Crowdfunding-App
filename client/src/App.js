@@ -2,15 +2,18 @@ import React, { useState, useEffect } from "react";
 import CrowdFunding from "./contracts/CrowdFunding.json";
 import Project from "./contracts/Project.json"
 import getWeb3 from "./getWeb3";
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
 import "./App.css";
 import { AppContext } from "./utils/AppContext";
 import CreateProject from "./features/Create/CreateProject";
+import AllProjects from "./features/View/AllProjects";
 
 const App = () => {
   const [web3, setWeb3] = useState(undefined)
   const [accounts, setAccounts] = useState([])
   const [contract, setContract] = useState({})
+  const [projects, setProjects] = useState([])
 
   useEffect(() => {
     const init = async () => {
@@ -26,12 +29,6 @@ const App = () => {
           deployedNetwork && deployedNetwork.address,
         )
 
-        // const deployedNetworkPR = Project.networks[networkId];
-        // const projectInstance = new web3.eth.Contract(
-        //   Project.abi,
-        //   deployedNetworkPR && deployedNetworkPR.address,
-        // )
-
         setWeb3(web3)
         setAccounts(accounts)
         setContract(instance)
@@ -45,29 +42,28 @@ const App = () => {
     init()
   }, [])
 
-
   const crowdfundProject = (address) => {
     const instance = new web3.eth.Contract(Project.abi, address);
     return instance
   }
 
-
-
   useEffect(() => {
-
     const getAllProjects = async () => {
       let res = await contract.methods.returnAllProjects().call().then((projects) => {
+        let allProjects = []
         projects.forEach((projectAddress) => {
           const projectInst = crowdfundProject(projectAddress);
           projectInst.methods.getInfo().call().then((projectData) => {
             const projectInfo = projectData;
-            console.log(projectInfo)
             projectInfo.isLoading = false;
             projectInfo.contract = projectInst;
             // projectData.push(projectInfo);
+            allProjects.push(projectInfo)
           });
         });
+        return allProjects
       });
+      setProjects(res)
     }
 
     if (web3 !== undefined
@@ -78,7 +74,7 @@ const App = () => {
   }, [web3, accounts, contract])
 
 
-  const values = { web3, accounts, contract, crowdfundProject }
+  const values = { web3, accounts, contract, crowdfundProject, projects }
 
 
   if (typeof web3 === 'undefined') {
@@ -88,7 +84,12 @@ const App = () => {
     return (
       <AppContext.Provider value={values}>
         <div className="App">
-          <CreateProject />
+          <Router>
+            <Switch>
+              <Route path="/all" component={AllProjects} />
+              <Route path="/create" component={CreateProject} />
+            </Switch>
+          </Router>
         </div>
       </AppContext.Provider>
     );

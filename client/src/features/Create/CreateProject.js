@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react'
 import "./style.css"
 import { AppContext } from "../../utils/AppContext"
 
-const CreateProject = () => {
+const CreateProject = (props) => {
 
     const { accounts, contract, crowdfundProject } = useContext(AppContext)
 
@@ -27,9 +27,7 @@ const CreateProject = () => {
                 projectInfo.currentAmount = 0;
                 projectInfo.currentState = 0;
                 projectInfo.contract = crowdfundProject(projectInfo.contractAddress);
-                console.log(projectInfo)
-                // startProjectDialog = false;
-                // newProject = { isLoading: false };
+                props.history.push("/all")
             })
     }
 
