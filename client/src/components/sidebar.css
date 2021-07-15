@@ -1,0 +1,34 @@
+.sidebar{
+    border-radius: 10px;
+}
+
+.right-side-bar{
+    background: linear-gradient(#ffcd62, #ffa67d);
+    height: calc(100vh - 80px);
+}
+
+.left-side-bar{
+    background: linear-gradient(#62ffbe, #7dbaff);
+    height: calc(100vh - 80px);
+}
+
+.sidebar ul li a{
+    font-size: 17px;
+    width: 100%;
+    color: grey;
+}
+
+.sidebar ul li{
+    padding: 14px;
+    cursor: pointer;
+    text-align: start;
+    transition: 0.5s;
+}
+
+.sidebar ul li:hover{
+    border-radius: 10px;
+    background-color: #ffffff;
+    transform: scale(1.05);
+    box-shadow: 0 0 10px #bebebe;
+    font-weight: bold;
+}

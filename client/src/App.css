@@ -27,3 +27,20 @@ body{
 .App-link {
   color: #09d3ac;
 }
+
+ul{
+  list-style-type: none;
+  margin: 0;
+  padding: 0 !important;
+}
+
+a{
+  color: #000000;
+  text-decoration: none;
+}
+
+.tri-div-view{
+  display: grid;
+  grid-template-columns: 1fr 4.5fr 1fr;
+  column-gap: 26px;
+}
