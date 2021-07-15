@@ -42,30 +42,29 @@ const App = () => {
     init()
   }, [])
 
+
+
   const crowdfundProject = (address) => {
     const instance = new web3.eth.Contract(Project.abi, address);
     return instance
   }
 
-  useEffect(() => {
-    const getAllProjects = async () => {
-      let res = await contract.methods.returnAllProjects().call().then((projects) => {
-        let allProjects = []
-        projects.forEach((projectAddress) => {
-          const projectInst = crowdfundProject(projectAddress);
-          projectInst.methods.getInfo().call().then((projectData) => {
+  const getAllProjects = () => {
+    contract.methods.returnAllProjects().call().then((pr) => {
+      pr.forEach(async (projectAddress) => {
+        const projectInst = crowdfundProject(projectAddress);
+        await projectInst.methods.getInfo().call()
+          .then((projectData) => {
             const projectInfo = projectData;
             projectInfo.isLoading = false;
             projectInfo.contract = projectInst;
-            // projectData.push(projectInfo);
-            allProjects.push(projectInfo)
-          });
-        });
-        return allProjects
+            setProjects(p => [...p, projectInfo])
+          })
       });
-      setProjects(res)
-    }
-
+    })
+  }
+  
+  useEffect(() => {
     if (web3 !== undefined
       && accounts !== undefined
       && Object.keys(contract).length) {
