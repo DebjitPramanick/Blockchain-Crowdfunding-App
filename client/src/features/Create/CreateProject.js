@@ -24,8 +24,8 @@ const CreateProject = (props) => {
             .then(res => {
                 const projectInfo = res.events.ProjectStarted.returnValues;
                 projectInfo.isLoading = false;
-                projectInfo.currentAmount = 0;
-                projectInfo.currentState = 0;
+                projectInfo.curBalance = 0;
+                projectInfo.curState = 0;
                 projectInfo.contract = crowdfundProject(projectInfo.contractAddress);
                 props.history.push("/all")
             })

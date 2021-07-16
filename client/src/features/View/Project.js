@@ -14,6 +14,7 @@ const Project = ({ project, accounts, web3 }) => {
     const fundProject = () => {
         let projectContract = project.contract
         project.isLoading = true
+        console.log(web3.utils.toWei(amount, 'ether'))
         projectContract.methods.contribute().send({
             from: accounts[0],
             value: web3.utils.toWei(amount, 'ether'),
@@ -21,13 +22,15 @@ const Project = ({ project, accounts, web3 }) => {
             console.log(res.events)
             const newTotal = parseInt(res.events.FundReceived.returnValues.curTotal, 10);
             const projectGoal = parseInt(project.goalAmount, 10);
-            console.log(newTotal)
+            console.log(newTotal, projectGoal)
+            
             project.curAmount = newTotal
             project.isLoading = false
-            if (newTotal >= projectGoal) {
-                project.currentState = 2;
-            }
+            // if (newTotal >= projectGoal) {
+            //     project.curState = 2;
+            // }
             // window.location.reload()
+            
         })
     }
 
