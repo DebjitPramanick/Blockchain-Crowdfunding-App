@@ -2,10 +2,17 @@
     margin: 20px;
 }
 
+.banner-img{
+    height: 360px;
+    width: 100%;
+}
+.tri-div-view{
+    margin-top: 20px;
+}
+
 .cards{
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    justify-content: center;
     row-gap: 16px;
     column-gap: 16px;
 }
@@ -36,24 +43,24 @@
 }
 
 .project-card #raised{
-    color: #5900ff;
+    color: grey;
     background-color: #ffffff;
-    border: 1px solid #5900ff;
-    padding: 6px;
     border-radius: 4px;
     display: flex;
     align-items: center;
-    justify-content: center;
+    font-size: 14px;
 }
 
 .project-card #raised span{
     display: inline-flex;
     align-items: center;
-    font-size: 16px;
+    font-size: 14px;
+    color: #5900ff;
 }
 
 .project-card #raised .ethIcon{
-    margin-bottom: 2px;
+    width: 14px;
+    margin-bottom: 1px;
 }
 
 .project-card #desc{
@@ -97,4 +104,32 @@
 
 .project-card button{
     margin-top: 16px;
+}
+
+.fund-box{
+    display: flex;
+    align-items: center;
+}
+
+.fund-box input{
+    border: 1px solid #5900ff;
+    width: 80%;
+    padding: 6px;
+    outline: 0;
+}
+
+.fund-box button{
+    border: 1px solid #5900ff;
+    background: #5900ff;
+    color: #ffffff;
+    width: 20%;
+    padding: 6px;
+    outline: 0;
+    margin: 0;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+.fund-box button:hover{
+    transform: scale(1.2);
 }
