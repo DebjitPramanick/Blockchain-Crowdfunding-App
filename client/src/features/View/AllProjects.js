@@ -18,8 +18,9 @@ const AllProjects = () => {
             <div className="tri-div-view">
                 <LeftSideBar />
                 <div className="cards">
-                    {projects.map(p => (
+                    {projects.map((p, i) => (
                         <Project 
+                        pIndex={i}
                         project={p}
                         accounts={accounts}
                         web3={web3}/>

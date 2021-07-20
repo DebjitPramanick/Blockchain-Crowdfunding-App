@@ -55,6 +55,7 @@ const App = () => {
         const projectInst = crowdfundProject(projectAddress);
         await projectInst.methods.getInfo().call()
           .then((projectData) => {
+            console.log(projectData)
             const projectInfo = projectData;
             projectInfo.isLoading = false;
             projectInfo.contract = projectInst;
@@ -63,7 +64,7 @@ const App = () => {
       });
     })
   }
-  
+
   useEffect(() => {
     if (web3 !== undefined
       && accounts !== undefined
@@ -73,7 +74,7 @@ const App = () => {
   }, [web3, accounts, contract])
 
 
-  const values = { web3, accounts, contract, crowdfundProject, projects }
+  const values = { web3, accounts, contract, crowdfundProject, projects, setProjects }
 
 
   if (typeof web3 === 'undefined') {

@@ -1,36 +1,59 @@
-import React, {useState} from 'react'
+import React, { useState, useContext, useEffect } from 'react'
+import { AppContext } from '../../utils/AppContext'
 
-const Project = ({ project, accounts, web3 }) => {
+const Project = ({ project, accounts, web3, pIndex }) => {
 
+    const { projects, setProjects } = useContext(AppContext)
     const [amount, setAmount] = useState(null)
+    const [funding, setFunding] = useState(0)
 
     const getDate = (date) => {
         let d = new Date(date * 1000)
         return `${d.getDate()}-${d.getMonth() + 1}-${d.getFullYear()}`
     }
 
-    console.log(project)
+    useEffect(() => {
+        const getFundingAmount = () => {
+            let projectContract = project.contract
+            projectContract.methods.contributions(accounts[0]).call()
+                .then(res => setFunding(Number(res)))
+        }
+
+        if (project) {
+            getFundingAmount()
+        }
+
+    }, [])
 
     const fundProject = () => {
         let projectContract = project.contract
         project.isLoading = true
-        console.log(web3.utils.toWei(amount, 'ether'))
+
         projectContract.methods.contribute().send({
             from: accounts[0],
-            value: web3.utils.toWei(amount, 'ether'),
+            value: amount,
         }).then(res => {
             console.log(res.events)
-            const newTotal = parseInt(res.events.FundReceived.returnValues.curTotal, 10);
+            const newTotal = parseInt(res.events.FundReceived.returnValues.currentTotal, 10);
             const projectGoal = parseInt(project.goalAmount, 10);
-            console.log(newTotal, projectGoal)
-            
-            project.curAmount = newTotal
-            project.isLoading = false
-            // if (newTotal >= projectGoal) {
-            //     project.curState = 2;
-            // }
-            // window.location.reload()
-            
+
+            project = { ...project, currentAmount: newTotal, isLoading: false }
+            if (newTotal >= projectGoal) {
+                project.currentState = 2;
+            }
+
+            let np = projects
+            np[pIndex] = project
+            setProjects(np)
+            window.location.reload()
+
+        })
+    }
+
+    const refund = () => {
+        let projectContract = project.contract
+        projectContract.methods.getRefund().send({
+            from: accounts[0]
         })
     }
 
@@ -39,7 +62,7 @@ const Project = ({ project, accounts, web3 }) => {
             <h3>{project.projectTitle}</h3>
             <div className="funded">
                 <img className="ethIcon" src="https://img.icons8.com/fluent/48/000000/ethereum.png" />
-                <p>{project.curAmount}</p>
+                <p>{project.currentAmount}</p>
             </div>
 
             <p id="desc">{project.projectDesc}</p>
@@ -48,10 +71,19 @@ const Project = ({ project, accounts, web3 }) => {
                 <span><img className="ethIcon" src="https://img.icons8.com/fluent/48/000000/ethereum.png" />{project.goalAmount}</span></p>
             <div className="fund-box">
                 <input placeholder="Enter amount"
-                value={amount ? amount: ''}
-                onChange={(e) => setAmount(e.target.value)}></input>
+                    value={amount ? amount : ''}
+                    onChange={(e) => setAmount(e.target.value)}></input>
                 <button onClick={fundProject}>Fund</button>
             </div>
+
+            {funding !== 0 && (
+                <div className="refund-box">
+                    <input placeholder="Enter amount"
+                        value={amount ? amount : ''}
+                        onChange={(e) => setAmount(e.target.value)}></input>
+                    <button onClick={refund}>Refund</button>
+                </div>
+            )}
         </div>
     )
 }
