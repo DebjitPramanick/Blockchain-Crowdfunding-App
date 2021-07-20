@@ -19,19 +19,25 @@ contract Crowdfunding {
     );
 
     /** @dev Function to start a new project.
-      * @param title Title of the project to be created
-      * @param description Brief description about the project
-      * @param durationInDays Project deadline in days
-      * @param amountToRaise Project goal in wei
-      */
+     * @param title Title of the project to be created
+     * @param description Brief description about the project
+     * @param durationInDays Project deadline in days
+     * @param amountToRaise Project goal in wei
+     */
     function startProject(
         string calldata title,
         string calldata description,
-        uint durationInDays,
-        uint amountToRaise
+        uint256 durationInDays,
+        uint256 amountToRaise
     ) external {
-        uint raiseUntil = now.add(durationInDays.mul(1 days));
-        Project newProject = new Project(msg.sender, title, description, raiseUntil, amountToRaise);
+        uint256 raiseUntil = now.add(durationInDays.mul(1 days));
+        Project newProject = new Project(
+            msg.sender,
+            title,
+            description,
+            raiseUntil,
+            amountToRaise
+        );
         projects.push(newProject);
         emit ProjectStarted(
             address(newProject),
@@ -41,20 +47,19 @@ contract Crowdfunding {
             raiseUntil,
             amountToRaise
         );
-    }                                                                                                                                   
+    }
 
     /** @dev Function to get all projects' contract addresses.
-      * @return A list of all projects' contract addreses
-      */
-    function returnAllProjects() external view returns(Project[] memory){
+     * @return A list of all projects' contract addreses
+     */
+    function returnAllProjects() external view returns (Project[] memory) {
         return projects;
     }
 }
 
-
 contract Project {
     using SafeMath for uint256;
-    
+
     // Data structures
     enum State {
         Fundraising,
@@ -65,16 +70,20 @@ contract Project {
     // State variables
     address payable public creator;
     uint256 public amountGoal; // required to reach at least this much, else everyone gets refund
-    uint public completeAt;
+    uint256 public completeAt;
     uint256 public currentBalance;
-    uint public raiseBy;
+    uint256 public raiseBy;
     string public title;
     string public description;
     State public state = State.Fundraising; // initialize on create
-    mapping (address => uint) public contributions;
+    mapping(address => uint256) public contributions;
 
     // Event that will be emitted whenever funding will be received
-    event FundReceived(address contributor, uint amount, uint currentTotal);
+    event FundReceived(
+        address contributor,
+        uint256 amount,
+        uint256 currentTotal
+    );
     // Event that will be emitted whenever the project starter has received the funds
     event CreatorPaid(address recipient);
 
@@ -94,8 +103,8 @@ contract Project {
         address payable projectStarter,
         string memory projectTitle,
         string memory projectDesc,
-        uint fundRaisingDeadline,
-        uint goalAmount
+        uint256 fundRaisingDeadline,
+        uint256 goalAmount
     ) public {
         creator = projectStarter;
         title = projectTitle;
@@ -106,8 +115,8 @@ contract Project {
     }
 
     /** @dev Function to fund a certain project.
-      */
-    function contribute() external inState(State.Fundraising) payable {
+     */
+    function contribute() external payable inState(State.Fundraising) {
         require(msg.sender != creator);
         contributions[msg.sender] = contributions[msg.sender].add(msg.value);
         currentBalance = currentBalance.add(msg.value);
@@ -116,19 +125,19 @@ contract Project {
     }
 
     /** @dev Function to change the project state depending on conditions.
-      */
+     */
     function checkIfFundingCompleteOrExpired() public {
         if (currentBalance >= amountGoal) {
             state = State.Successful;
             payOut();
-        } else if (now > raiseBy)  {
+        } else if (now > raiseBy) {
             state = State.Expired;
         }
         completeAt = now;
     }
 
     /** @dev Function to give the received funds to project starter.
-      */
+     */
     function payOut() internal inState(State.Successful) returns (bool) {
         uint256 totalRaised = currentBalance;
         currentBalance = 0;
@@ -145,11 +154,12 @@ contract Project {
     }
 
     /** @dev Function to retrieve donated amount when a project expires.
-      */
-    function getRefund() public inState(State.Expired) returns (bool) {
+     */
+    function getRefund() public inState(State.Expired) returns (bool) 
+    {
         require(contributions[msg.sender] > 0);
 
-        uint amountToRefund = contributions[msg.sender];
+        uint256 amountToRefund = contributions[msg.sender];
         contributions[msg.sender] = 0;
 
         if (!msg.sender.send(amountToRefund)) {
@@ -163,17 +173,20 @@ contract Project {
     }
 
     /** @dev Function to get specific information about the project.
-      * @return Returns all the project's details
-      */
-    function getInfo() public returns (
-        address payable projectStarter,
-        string memory projectTitle,
-        string memory projectDesc,
-        uint256 deadline,
-        State currentState,
-        uint256 currentAmount,
-        uint256 goalAmount
-    ) {
+     * @return Returns all the project's details
+     */
+    function getInfo()
+        public
+        returns (
+            address payable projectStarter,
+            string memory projectTitle,
+            string memory projectDesc,
+            uint256 deadline,
+            State currentState,
+            uint256 currentAmount,
+            uint256 goalAmount
+        )
+    {
         projectStarter = creator;
         projectTitle = title;
         projectDesc = description;

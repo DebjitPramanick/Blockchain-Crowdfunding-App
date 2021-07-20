@@ -54,6 +54,9 @@ const Project = ({ project, accounts, web3, pIndex }) => {
         let projectContract = project.contract
         projectContract.methods.getRefund().send({
             from: accounts[0]
+        }).then(res => {
+            console.log(res)
+            window.location.reload()
         })
     }
 
@@ -78,9 +81,6 @@ const Project = ({ project, accounts, web3, pIndex }) => {
 
             {funding !== 0 && (
                 <div className="refund-box">
-                    <input placeholder="Enter amount"
-                        value={amount ? amount : ''}
-                        onChange={(e) => setAmount(e.target.value)}></input>
                     <button onClick={refund}>Refund</button>
                 </div>
             )}
