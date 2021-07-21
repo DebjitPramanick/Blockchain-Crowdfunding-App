@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react'
 import "./style.css"
 import { AppContext } from "../../utils/AppContext"
+import { Link } from 'react-router-dom'
 
 const CreateProject = (props) => {
 
@@ -14,25 +15,35 @@ const CreateProject = (props) => {
     })
 
     const create = async (e) => {
-        console.log("Create Project")
         e.preventDefault()
-        contract.methods.startProject(
-            project.title,
-            project.description,
-            project.duration,
-            project.amountGoal
-        ).send({ from: accounts[0] })
-            .then(res => {
-                const projectInfo = res.events.ProjectStarted.returnValues;
-                projectInfo.isLoading = false;
-                projectInfo.currentState = 0;
-                projectInfo.contract = crowdfundProject(projectInfo.contractAddress);
-                props.history.push("/all")
-            })
+        if (project.title !== '' &&
+            project.description !== '' &&
+            project.duration &&
+            project.amountGoal) {
+
+
+            contract.methods.startProject(
+                project.title,
+                project.description,
+                project.duration,
+                project.amountGoal
+            ).send({ from: accounts[0] })
+                .then(res => {
+                    const projectInfo = res.events.ProjectStarted.returnValues;
+                    projectInfo.isLoading = false;
+                    projectInfo.currentState = 0;
+                    projectInfo.contract = crowdfundProject(projectInfo.contractAddress);
+                    props.history.push("/all")
+                })
+        }
+        else {
+            alert("Fill all the fields.")
+        }
     }
 
     return (
         <div className="cretae-container">
+            <Link to="/all" className="backto-home">Back to home</Link>
             <div className="split-container">
                 <div className="form-container">
                     <form onSubmit={create}>
