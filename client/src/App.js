@@ -8,6 +8,7 @@ import "./App.css";
 import { AppContext } from "./utils/AppContext";
 import CreateProject from "./features/Create/CreateProject";
 import AllProjects from "./features/View/AllProjects";
+import Page from "./features/LandingPage/Page";
 
 const App = () => {
   const [web3, setWeb3] = useState(undefined)
@@ -86,8 +87,9 @@ const App = () => {
         <div className="App">
           <Router>
             <Switch>
-              <Route path="/all" component={AllProjects} />
-              <Route path="/create" component={CreateProject} />
+              <Route path="/" exact component={Page} />
+              <Route path="/all" exact component={AllProjects} />
+              <Route path="/create" exact component={CreateProject} />
             </Switch>
           </Router>
         </div>

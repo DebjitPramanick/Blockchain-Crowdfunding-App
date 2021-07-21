@@ -123,22 +123,10 @@
     margin-top: 16px;
 }
 
-.fund-box{
-    display: flex;
-    align-items: center;
-}
-
-.fund-box input{
-    border: 1px solid #5900ff;
-    width: 80%;
-    padding: 6px;
-    outline: 0;
-}
-
 .fund-options.flex{
     display: flex;
     align-items: center;
-    column-gap: 16px;
+    column-gap: 10px;
 }
 
 .fund-options button{
