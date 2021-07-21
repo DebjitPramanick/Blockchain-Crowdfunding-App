@@ -25,7 +25,6 @@ const CreateProject = (props) => {
             .then(res => {
                 const projectInfo = res.events.ProjectStarted.returnValues;
                 projectInfo.isLoading = false;
-                // projectInfo.currentAmount = 0;
                 projectInfo.currentState = 0;
                 projectInfo.contract = crowdfundProject(projectInfo.contractAddress);
                 props.history.push("/all")
@@ -34,31 +33,35 @@ const CreateProject = (props) => {
 
     return (
         <div className="cretae-container">
-            <h2>Let's create the project.</h2>
+            <div className="split-container">
+                <div className="form-container">
+                    <form onSubmit={create}>
+                        <h2 className="heading">Create Project</h2>
+                        <div className="ip-fields">
+                            <input placeholder="Title"
+                                value={project.title}
+                                onChange={(e) => setProject({ ...project, title: e.target.value })} />
 
-            <form onSubmit={create}>
-                <div className="ip-fields">
-                    <input placeholder="Title"
-                        value={project.title}
-                        onChange={(e) => setProject({ ...project, title: e.target.value })} />
+                            <input placeholder="Duration (days)"
+                                value={project.duration}
+                                onChange={(e) => setProject({ ...project, duration: e.target.value })} />
+                        </div>
 
-                    <input placeholder="Description"
-                        value={project.description}
-                        onChange={(e) => setProject({ ...project, description: e.target.value })} />
+                        <div className="ip-fields">
+                            <input placeholder="Goal Amount (wei)"
+                                value={project.amountGoal}
+                                onChange={(e) => setProject({ ...project, amountGoal: e.target.value })} />
+
+                            <textarea placeholder="Description"
+                                value={project.description}
+                                onChange={(e) => setProject({ ...project, description: e.target.value })} />
+                        </div>
+
+                        <button>Create</button>
+                    </form>
                 </div>
 
-                <div className="ip-fields">
-                    <input placeholder="Duration (days)"
-                        value={project.duration}
-                        onChange={(e) => setProject({ ...project, duration: e.target.value })} />
-
-                    <input placeholder="Goal Amount (ether)"
-                        value={project.amountGoal}
-                        onChange={(e) => setProject({ ...project, amountGoal: e.target.value })} />
-                </div>
-
-                <button>Create</button>
-            </form>
+            </div>
         </div>
     )
 }

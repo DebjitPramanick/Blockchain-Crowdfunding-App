@@ -13,18 +13,19 @@ const AllProjects = () => {
 
     return (
         <div className="main-container">
-            <img className="banner-img" src='https://truust.io/wp-content/uploads/sites/18/2020/09/Crowdfunding-1.jpg' alt="banner"/>
 
             <div className="tri-div-view">
                 <LeftSideBar />
-                <div className="cards">
-                    {projects.map((p, i) => (
-                        <Project 
-                        pIndex={i}
-                        project={p}
-                        accounts={accounts}
-                        web3={web3}/>
-                    ))}
+                <div className="mid-container">
+                    <div className="cards">
+                        {projects.map((p, i) => (
+                            <Project
+                                pIndex={i}
+                                project={p}
+                                accounts={accounts}
+                                web3={web3} />
+                        ))}
+                    </div>
                 </div>
                 <RightSideBar />
             </div>

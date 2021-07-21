@@ -4,12 +4,12 @@
 
 .right-side-bar{
     background: linear-gradient(#ffcd62, #ffa67d);
-    height: calc(100vh - 80px);
+    height: calc(100vh - 40px);
 }
 
 .left-side-bar{
     background: linear-gradient(#62ffbe, #7dbaff);
-    height: calc(100vh - 80px);
+    height: calc(100vh - 40px);
 }
 
 .sidebar ul li a{
