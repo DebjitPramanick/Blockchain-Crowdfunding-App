@@ -21,8 +21,13 @@
     box-shadow: 2px 2px 5px #dddddd, -2px -2px 5px #dddddd;
     padding: 12px;
     border-radius: 4px;
-    position: relative;
     height: fit-content;
+}
+
+.project-card .top-tile{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .project-card h3{
@@ -81,10 +86,6 @@
     width: fit-content;
     height: 20px;
     padding: 0 12px;
-    position: absolute;
-    top: 0;
-    right: 0;
-    margin: 12px;
     background-color: #ffffff;
     color: #0c0c0c;
     display: flex;
@@ -118,7 +119,13 @@
     outline: 0;
 }
 
-.fund-box button{
+.fund-options.flex{
+    display: flex;
+    align-items: center;
+    column-gap: 16px;
+}
+
+.fund-options button{
     border: 1px solid #5900ff;
     background: #5900ff;
     color: #ffffff;
@@ -128,8 +135,11 @@
     margin: 0;
     cursor: pointer;
     transition: 0.5s;
+    flex-basis: 50%;
+    border-radius: 4px;
+    width: 100%;
 }
 
-.fund-box button:hover{
-    transform: scale(1.2);
+.fund-options button:hover{
+    background-color: #8747ff;
 }

@@ -1,0 +1,20 @@
+.modal-container{
+    position: absolute;
+    background-color: #00000096;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+}
+
+.modal-box{
+    width: 400px;
+    background-color: #fff;
+    padding: 16px;
+    border-radius: 6px;
+}

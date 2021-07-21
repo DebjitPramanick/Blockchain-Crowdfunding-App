@@ -1,8 +1,8 @@
 import React, { useContext } from 'react'
 import { AppContext } from '../../utils/AppContext'
 import "./style.css"
-import LeftSideBar from '../../components/LeftSideBar'
-import RightSideBar from '../../components/RightSideBar'
+import LeftSideBar from '../../components/sidebars/LeftSideBar'
+import RightSideBar from '../../components/sidebars/RightSideBar'
 import Project from './Project'
 
 const AllProjects = () => {
