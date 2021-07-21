@@ -70,3 +70,8 @@
     border-radius: 4px;
     width: 100%;
 }
+
+.exp-msg{
+    color: #e75410;
+    text-align: start;
+}

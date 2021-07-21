@@ -1,5 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react'
 import FundModal from '../../components/modals/FundModal'
+import RefundModal from '../../components/modals/RefundModal'
 import { AppContext } from '../../utils/AppContext'
 
 const Project = ({ project, accounts, web3, pIndex }) => {
@@ -8,6 +9,7 @@ const Project = ({ project, accounts, web3, pIndex }) => {
     const [amount, setAmount] = useState(null)
     const [funding, setFunding] = useState(0)
     const [open, setOpen] = useState(false)
+    const [rOpen, setROpen] = useState(false)
 
     const getDate = (date) => {
         let d = new Date(date * 1000)
@@ -79,7 +81,7 @@ const Project = ({ project, accounts, web3, pIndex }) => {
                 <span><img className="ethIcon" src="https://img.icons8.com/fluent/48/000000/ethereum.png" />{project.goalAmount}</span></p>
             <div className={`fund-options ${funding !== 0 ? 'flex' : ''}`}>
                 <button onClick={() => setOpen(true)}>Fund</button>
-                {funding !== 0 && <button onClick={refund}>Refund</button>}
+                {funding !== 0 && <button onClick={() => setROpen(true)}>Refund</button>}
             </div>
 
             {open &&
@@ -90,6 +92,14 @@ const Project = ({ project, accounts, web3, pIndex }) => {
                     fund={fundProject}
                     desc={project.projectDesc}
                     title={project.projectTitle} />}
+
+            {rOpen && (
+                <RefundModal
+                    setROpen={setROpen}
+                    project={project}
+                    refund={refund}
+                />
+            )}
         </div>
     )
 }
