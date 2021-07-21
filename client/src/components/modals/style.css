@@ -17,4 +17,56 @@
     background-color: #fff;
     padding: 16px;
     border-radius: 6px;
+    position: relative;
+    
+}
+
+.close-icon{
+    position: absolute;
+    top: 0;
+    right: 0;
+    cursor: pointer;
+    margin: 16px;
+}
+
+.modal-box h2{
+    text-align: start;
+    margin: 0;
+}
+
+.pr-title{
+    text-align: start;
+    margin-bottom: 0;
+}
+
+.pr-desc{
+    text-align: start;
+    color: grey;
+    font-size: 14px;
+    margin: 10px 0;
+}
+
+.pr-fund{
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px;
+    font-size: 14px;
+    border-radius: 4px;
+    outline: 0;
+    border: 1px solid #5900ff;
+}
+
+.pr-fund-btn{
+    border: 1px solid #5900ff;
+    background: #5900ff;
+    color: #ffffff;
+    width: 20%;
+    padding: 6px;
+    outline: 0;
+    margin: 0;
+    cursor: pointer;
+    transition: 0.5s;
+    flex-basis: 50%;
+    border-radius: 4px;
+    width: 100%;
 }

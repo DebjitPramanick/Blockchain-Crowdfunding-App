@@ -87,7 +87,9 @@ const Project = ({ project, accounts, web3, pIndex }) => {
                     setOpen={setOpen}
                     setAmount={setAmount}
                     amount={amount}
-                    fund={fundProject} />}
+                    fund={fundProject}
+                    desc={project.projectDesc}
+                    title={project.projectTitle} />}
         </div>
     )
 }
