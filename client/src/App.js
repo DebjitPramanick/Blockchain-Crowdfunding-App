@@ -8,6 +8,7 @@ import "./App.css";
 import { AppContext } from "./utils/AppContext";
 import CreateProject from "./features/Create/CreateProject";
 import AllProjects from "./features/View/AllProjects";
+import MyProjects from "./features/Projects/MyProjects"
 import Page from "./features/LandingPage/Page";
 
 const App = () => {
@@ -60,6 +61,7 @@ const App = () => {
             const projectInfo = projectData;
             projectInfo.isLoading = false;
             projectInfo.contract = projectInst;
+            console.log(projectInfo)
             setProjects(p => [...p, projectInfo])
           })
       });
@@ -90,6 +92,7 @@ const App = () => {
               <Route path="/" exact component={Page} />
               <Route path="/all" exact component={AllProjects} />
               <Route path="/create" exact component={CreateProject} />
+              <Route path="/projects/my" exact component={MyProjects} />
             </Switch>
           </Router>
         </div>

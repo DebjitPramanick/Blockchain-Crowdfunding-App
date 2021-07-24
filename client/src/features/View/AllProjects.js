@@ -12,6 +12,7 @@ const AllProjects = () => {
 
     let allProjects = projects.filter(p => {
         return p.projectTitle.toLowerCase().includes(query.toLowerCase())
+        && p.projectStarter !== accounts[0]
     })
 
     return (
