@@ -42,7 +42,7 @@ const CreateProject = (props) => {
     }
 
     return (
-        <div className="cretae-container">
+        <div className="create-container">
             <Link to="/all" className="backto-home">Back to home</Link>
             <div className="split-container">
                 <div className="form-container">

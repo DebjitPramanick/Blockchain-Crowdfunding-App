@@ -15,8 +15,8 @@
 }
 
 
-.form-container form{
-    width: 800px;
+.form-container.auth form{
+    width: 500px;
     padding: 20px;
     background-color: #e9e9e9;
     border-radius: 8px;
@@ -61,6 +61,18 @@
 
 .form-container textarea{
     height: 100px;
+}
+
+.flex-container{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.flex-container a{
+    color: #5900ff;
+    cursor: pointer;
 }
 
 .form-container button{

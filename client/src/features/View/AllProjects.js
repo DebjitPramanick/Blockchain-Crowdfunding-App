@@ -4,10 +4,11 @@ import "./style.css"
 import LeftSideBar from '../../components/sidebars/LeftSideBar'
 import RightSideBar from '../../components/sidebars/RightSideBar'
 import Project from './Project'
+import { Redirect } from 'react-router-dom'
 
 const AllProjects = () => {
 
-    const { projects, accounts, web3 } = useContext(AppContext)
+    const { projects, accounts, web3, curUser } = useContext(AppContext)
     const [query, setQuery] = useState('')
 
     let allProjects = projects.filter(p => {

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import CrowdFunding from "./contracts/CrowdFunding.json";
 import Project from "./contracts/Project.json"
 import getWeb3 from "./getWeb3";
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom'
 
 import "./App.css";
 import { AppContext } from "./utils/AppContext";
@@ -10,12 +10,15 @@ import CreateProject from "./features/Create/CreateProject";
 import AllProjects from "./features/View/AllProjects";
 import MyProjects from "./features/Projects/MyProjects"
 import Page from "./features/LandingPage/Page";
+import Register from "./features/Auth/Register";
+import Login from "./features/Auth/Login";
 
 const App = () => {
   const [web3, setWeb3] = useState(undefined)
   const [accounts, setAccounts] = useState([])
-  const [contract, setContract] = useState({})
+  const [contract, setContract] = useState(null)
   const [projects, setProjects] = useState([])
+  const [curUser, setCurUser] = useState(null)
 
   useEffect(() => {
     const init = async () => {
@@ -44,7 +47,23 @@ const App = () => {
     init()
   }, [])
 
+  const getUser = async () => {
+    contract.methods.curUserAddress()
+      .call()
+      .then(r => {
+        if(r !== '0x0000000000000000000000000000000000000000'){
+          setCurUser(r)
+        }
+      })
+  }
 
+  useEffect(() => {
+    if (contract) {
+      getUser()
+    }
+  }, [contract])
+
+  console.log(curUser)
 
   const crowdfundProject = (address) => {
     const instance = new web3.eth.Contract(Project.abi, address);
@@ -52,6 +71,7 @@ const App = () => {
   }
 
   const getAllProjects = () => {
+
     contract.methods.returnAllProjects().call().then((pr) => {
       pr.forEach(async (projectAddress) => {
         const projectInst = crowdfundProject(projectAddress);
@@ -71,13 +91,15 @@ const App = () => {
   useEffect(() => {
     if (web3 !== undefined
       && accounts !== undefined
-      && Object.keys(contract).length) {
+      && contract
+      && curUser) {
+
       getAllProjects()
     }
   }, [web3, accounts, contract])
 
 
-  const values = { web3, accounts, contract, crowdfundProject, projects, setProjects }
+  const values = { web3, accounts, contract, crowdfundProject, projects, setProjects, curUser }
 
 
   if (typeof web3 === 'undefined') {
@@ -89,10 +111,16 @@ const App = () => {
         <div className="App">
           <Router>
             <Switch>
+              {!curUser && <Redirect from="/all" to="/login" />}
+              {!curUser && <Redirect from="/create" to="/login" />}
+              {!curUser && <Redirect from="/projects/my" to="/login" />}
+
               <Route path="/" exact component={Page} />
-              <Route path="/all" exact component={AllProjects} />
-              <Route path="/create" exact component={CreateProject} />
-              <Route path="/projects/my" exact component={MyProjects} />
+              <Route path="/all" component={AllProjects} />
+              <Route path="/create" component={CreateProject} />
+              <Route path="/projects/my" component={MyProjects} />
+              <Route path="/register" exact component={Register} />
+              <Route path="/login" exact component={Login} />
             </Switch>
           </Router>
         </div>
