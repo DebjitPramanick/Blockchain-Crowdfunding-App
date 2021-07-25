@@ -18,7 +18,6 @@ const AllProjects = () => {
 
     return (
         <div className="main-container">
-
             <div className="tri-div-view">
                 <LeftSideBar />
                 <div className="mid-container">

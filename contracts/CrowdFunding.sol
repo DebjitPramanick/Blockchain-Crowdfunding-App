@@ -2,42 +2,11 @@ pragma solidity >=0.4.21 <0.7.0;
 
 import "@openzeppelin/contracts/math/SafeMath.sol";
 
-contract CrowdFunding {
+contract Crowdfunding {
     using SafeMath for uint256;
 
     // List of existing projects
     Project[] private projects;
-
-    mapping(address => User) public users;
-    address public curUserAddress;
-
-    struct User {
-        address payable publicAddress;
-        string name;
-        string email;
-        string password;
-    }
-
-    function register(address payable publicAddress, string memory name, string memory email, string memory password) 
-    public returns (string memory message)
-    {
-        users[publicAddress] = User(publicAddress, name, email, password);
-        message = "User Registered";
-    } 
-
-    function login(address payable publicAddress) public {
-        curUserAddress = publicAddress;
-    } 
-
-    function getCurUser() external returns (
-        address payable publicAddress,
-        string memory name,
-        string memory email
-    ){
-        name = users[curUserAddress].name;
-        email = users[curUserAddress].email;
-        publicAddress = users[curUserAddress].publicAddress; 
-    }
 
     // Event that will be emitted whenever a new project is started
     event ProjectStarted(

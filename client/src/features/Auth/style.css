@@ -15,7 +15,7 @@
 }
 
 
-.form-container.auth form{
+.form-container.auth .form{
     width: 500px;
     padding: 20px;
     background-color: #e9e9e9;
@@ -28,6 +28,19 @@
     grid-column: 1/3;
     margin: 0;
     margin-bottom: 20px;
+}
+
+.login-dg{
+    margin-top: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: 30px;
+}
+
+.login-message{
+    color: grey;
+    margin-bottom: 40px;
 }
 
 .backto-home{
@@ -43,8 +56,8 @@
     border-radius: 4px;
 }
 
-.form-container form input,
-.form-container form textarea{
+.form-container .form input,
+.form-container .form textarea{
     width: 100%;
     padding: 12px 8px;
     border-radius: 6px;
