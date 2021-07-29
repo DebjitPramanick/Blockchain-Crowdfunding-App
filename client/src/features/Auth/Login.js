@@ -16,18 +16,21 @@ const Login = () => {
     const wallet = useWallet()
     const blockNumber = wallet.getBlockNumber()
 
-    const handleConnect = async(e) => {
-        await wallet.connect()
-        .then(res => {
-            window.location.href = "/all"
+    const handleConnect = async (e) => {
+        e.preventDefault()
+        await window.ethereum.request({
+            method: "wallet_requestPermissions",
+            params: [{eth_accounts: {}}]
+        });
+        const address = await window.ethereum.request({
+            method: "eth_requestAccounts",
+            params: [{  }]
         })
-    }
-
-    const handleDisconnect= async() => {
-        await wallet.reset()
-        // .then(res => {
-        //     window.location.reload()
-        // })
+        let ad = web3.utils.toChecksumAddress(address[0])
+        const networkId = await web3.eth.net.getId();
+        localStorage.setItem('cacheKey', ad)
+        localStorage.setItem('cacheNID', networkId)
+        window.location.href = "/all"
     }
 
     return (
@@ -52,7 +55,6 @@ const Login = () => {
                             <a href="https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn">
                                 Add Metamask To Chrome
                             </a>
-                            <button onClick={handleDisconnect}>Disconnect</button>
                         </div>
                     </div>
                 </div>

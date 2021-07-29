@@ -37,7 +37,6 @@ const Project = ({ project, accounts, web3, pIndex }) => {
             from: accounts[0],
             value: amount,
         }).then(res => {
-            console.log(res.events)
             const newTotal = parseInt(res.events.FundReceived.returnValues.currentTotal, 10);
             const projectGoal = parseInt(project.goalAmount, 10);
 
@@ -59,7 +58,6 @@ const Project = ({ project, accounts, web3, pIndex }) => {
         projectContract.methods.getRefund().send({
             from: accounts[0]
         }).then(res => {
-            console.log(res)
             window.location.reload()
         })
     }

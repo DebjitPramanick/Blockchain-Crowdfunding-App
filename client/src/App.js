@@ -24,27 +24,38 @@ const App = () => {
 
   useEffect(() => {
     const connect = async () => {
-      console.log("Enteredddd")
+      const pk = localStorage.getItem('cacheKey')
+      const nId = localStorage.getItem('cacheNID')
       try {
-        const web3 = new Web3(window.ethereum)
-        const accounts = await web3.eth.getAccounts();
-        console.log(accounts)
-        const networkId = await web3.eth.net.getId();
+        if (pk && nId) {
+          const web3 = new Web3(window.ethereum)
+          console.log(pk)
+          const accounts = !pk || pk === undefined ? [] : [pk];
+          const networkId = nId;
+          console.log(networkId)
 
-        const deployedNetwork = CrowdFunding.networks[networkId];
-        const instance = new web3.eth.Contract(
-          CrowdFunding.abi,
-          deployedNetwork && deployedNetwork.address,
-        )
+          const deployedNetwork = CrowdFunding.networks[networkId];
+          const instance = new web3.eth.Contract(
+            CrowdFunding.abi,
+            deployedNetwork && deployedNetwork.address,
+          )
 
-        setWeb3(web3)
-        setAccounts(accounts)
-        setContract(instance)
+          localStorage.setItem("cacheKey", accounts[0]);
+
+          setWeb3(web3)
+          setAccounts(accounts)
+          setContract(instance)
+          setLoading(false)
+        }
+        else{
+          setLoading(false)
+        }
+      } 
+      
+      catch (error) {
         setLoading(false)
-      } catch (error) {
         console.error(error);
       }
-      console.log("Exited")
     }
     connect()
   }, [])
@@ -66,7 +77,6 @@ const App = () => {
             const projectInfo = projectData;
             projectInfo.isLoading = false;
             projectInfo.contract = projectInst;
-            console.log(projectInfo)
             setProjects(p => [...p, projectInfo])
           })
       });
@@ -89,7 +99,7 @@ const App = () => {
   if (typeof web3 === 'undefined') {
     return <div>Loading Web3, accounts, and contract...</div>;
   }
-  else if(loading) {
+  else if (loading) {
     return <p>Loading....</p>
   }
   else {
