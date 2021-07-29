@@ -22,12 +22,14 @@ const AllProjects = () => {
                 <LeftSideBar />
                 <div className="mid-container">
                     <div className="search-bar">
+                        <h1>All Projects</h1>
                         <input 
                         type="search"
                         value={query}
                         onChange={(e) => setQuery(e.target.value)}
                         placeholder="Search Project"></input>
                     </div>
+                    
                     <div className="cards">
                         {allProjects.map((p, i) => (
                             <Project

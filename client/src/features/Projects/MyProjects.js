@@ -22,6 +22,7 @@ const MyProjects = () => {
         <LeftSideBar />
         <div className="mid-container">
           <div className="search-bar">
+            <h1>My Projects</h1>
             <input
               type="search"
               value={query}

@@ -33,7 +33,7 @@ const CreateProject = (props) => {
                     projectInfo.isLoading = false;
                     projectInfo.currentState = 0;
                     projectInfo.contract = crowdfundProject(projectInfo.contractAddress);
-                    props.history.push("/all")
+                    window.location.href = "/all"
                 })
         }
         else {

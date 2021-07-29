@@ -1,5 +1,6 @@
 .sidebar{
     border-radius: 10px;
+    width: 282px
 }
 
 .right-side-bar{
@@ -31,6 +32,14 @@
     padding: 0;
 }
 
+.right-side-bar ul li:first-child:hover{
+    border-radius: 10px;
+    background-color: #ffffff;
+    transform: scale(1);
+    box-shadow: 0 0 10px #bebebe;
+    font-weight: bold;
+}
+
 .sidebar ul li:hover{
     border-radius: 10px;
     background-color: #ffffff;
@@ -39,13 +48,36 @@
     font-weight: bold;
 }
 
+.acc-details{
+    background-color: #fff;
+    margin-top: 0;
+    padding: 14px 0;
+    border: 2px #ffa67d solid;
+    border-radius: 10px 10px 0 0;
+}
+
+.acc-details .acc{
+    width: 95%;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    column-gap: 10px;
+}
+
+.acc-details .acc p{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 200px;
+}
+
+
 .disconnect-btn{
     background-color: #5900ff;
     color: #fff !important;
     font-size: 16px;
     width: 100%;
     outline: 0;
-    border-radius: 10px;
+    border-radius: 0 0 10px 10px;
     padding: 12px;
     cursor: pointer;
     border: 0;

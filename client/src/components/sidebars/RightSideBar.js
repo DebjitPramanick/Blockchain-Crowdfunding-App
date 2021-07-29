@@ -2,10 +2,11 @@ import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
 import { AppContext } from '../../utils/AppContext'
 import "./sidebar.css"
+import { generateRandomAvatar } from 'seedable-random-avatar-generator';
 
 const RightSideBar = () => {
 
-    const { web3 } = useContext(AppContext)
+    const { accounts } = useContext(AppContext)
     const handleDisconnect = () => {
         localStorage.removeItem('cacheKey')
         localStorage.removeItem('cacheNID')
@@ -14,10 +15,17 @@ const RightSideBar = () => {
 
     return (
         <div className="right-side-bar sidebar">
+
+            <div className="acc-details">
+                <div className="acc">
+                    <img width={40} src={generateRandomAvatar(accounts[0])} alt="/" />
+                    <p>{accounts[0]}</p>
+                </div>
+                
+            </div>
+
             <ul>
                 <li><button className="disconnect-btn" onClick={handleDisconnect}>Disconnect Wallet</button></li>
-                <li><Link to="/profile">Your Profile</Link></li>
-                <li><Link to="/register">Register</Link></li>
                 <li><Link to="/projects/my">Your Projects</Link></li>
                 <li><Link to="/projects/funded">Funded Projects</Link></li>
                 <li><Link to="/create">Create Project</Link></li>
