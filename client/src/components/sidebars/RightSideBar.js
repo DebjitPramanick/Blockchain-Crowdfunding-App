@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { AppContext } from '../../utils/AppContext'
 import "./sidebar.css"
@@ -6,20 +6,36 @@ import { generateRandomAvatar } from 'seedable-random-avatar-generator';
 
 const RightSideBar = () => {
 
-    const { accounts } = useContext(AppContext)
+    const { accounts, web3 } = useContext(AppContext)
+    const [balance, setBalance] = useState(0)
     const handleDisconnect = () => {
         localStorage.removeItem('cacheKey')
         localStorage.removeItem('cacheNID')
-        window.location.href="/login"
+        window.location.href = "/login"
     }
+
+    useEffect(() => {
+        const showBalance = () => {
+            web3.eth.getBalance(accounts[0], (err, bal) => {
+                let bl = web3.utils.fromWei(bal, "ether")
+                bl = Math.floor(bl)
+                setBalance(bl)
+            });
+        }
+        showBalance()
+    }, [web3])
 
     return (
         <div className="right-side-bar sidebar">
 
             <div className="acc-details">
                 <div className="acc">
-                    <img width={40} src={generateRandomAvatar(accounts[0])} alt="/" />
-                    <p>{accounts[0]}</p>
+                    <img width={50} src={generateRandomAvatar(accounts[0])} alt="/" />
+                    <div className="details">
+                        <p>{accounts[0]}</p>
+                        <p className="balance">{balance} ETH</p>
+                    </div>
+                    
                 </div>
                 
             </div>
