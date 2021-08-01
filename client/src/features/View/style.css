@@ -158,6 +158,13 @@
     position: relative;
 }
 
+.funding-bar .others.myproject{
+    border-radius: 40px 0 0 40px;
+    background-color: #3effb5;
+    border-right: 2px solid #3effb5;
+    border-left: 2px solid #3effb5;
+}
+
 .funding-bar .blank{
     background-color: #ff9a9a;
     height: 100%;

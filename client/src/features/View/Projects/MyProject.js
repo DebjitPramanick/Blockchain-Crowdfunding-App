@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext} from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import FundModal from '../../../components/modals/FundModal'
 import RefundModal from '../../../components/modals/RefundModal'
 import { AppContext } from '../../../utils/AppContext'
@@ -28,37 +28,12 @@ const MyProject = ({ project, accounts, web3, pIndex }) => {
 
     }, [])
 
-    const fundProject = () => {
-        let projectContract = project.contract
-        project.isLoading = true
-
-        projectContract.methods.contribute().send({
-            from: accounts[0],
-            value: amount,
-        }).then(res => {
-            const newTotal = parseInt(res.events.FundReceived.returnValues.currentTotal, 10);
-            const projectGoal = parseInt(project.goalAmount, 10);
-
-            project = { ...project, currentAmount: newTotal, isLoading: false }
-            if (newTotal >= projectGoal) {
-                project.currentState = 2;
-            }
-
-            let np = projects
-            np[pIndex] = project
-            setProjects(np)
-            window.location.reload()
-
-        })
-    }
-
-    const refund = () => {
-        let projectContract = project.contract
-        projectContract.methods.getRefund().send({
-            from: accounts[0]
-        }).then(res => {
-            window.location.reload()
-        })
+    const fundedPercentage = (fund) => {
+        let total = Number(project.goalAmount)
+        fund = Number(fund)
+        let p = (fund / total) * 100
+        console.log(p)
+        return p
     }
 
     return (
@@ -76,27 +51,16 @@ const MyProject = ({ project, accounts, web3, pIndex }) => {
             <p id="deadline">Will be closed on: {getDate(project.deadline)}</p>
             <p id="raised">Amount to be raised:
                 <span><img className="ethIcon" src="https://img.icons8.com/fluent/48/000000/ethereum.png" />{project.goalAmount}</span></p>
-            <div className={`fund-options ${funding !== 0 ? 'flex' : ''}`}>
-                <button onClick={() => setOpen(true)}>Fund</button>
-                {funding !== 0 && <button onClick={() => setROpen(true)}>Refund</button>}
+            <div className="funding-bar" style={{marginBottom: 0}}>
+                <div className="others myproject"
+                    style={{ width: `${fundedPercentage(Number(project.currentAmount) - Number(funding))}%` }}>
+                    <p className="lbl">Others: {Number(project.currentAmount) - Number(funding)} ETH</p>
+                </div>
+                <div className="blank"
+                    style={{ width: `${fundedPercentage(Number(project.goalAmount) - Number(project.currentAmount))}%` }}>
+                    <p className="lbl">Remaining: {Number(project.goalAmount) - Number(project.currentAmount)} ETH</p>
+                </div>
             </div>
-
-            {open &&
-                <FundModal
-                    setOpen={setOpen}
-                    setAmount={setAmount}
-                    amount={amount}
-                    fund={fundProject}
-                    desc={project.projectDesc}
-                    title={project.projectTitle} />}
-
-            {rOpen && (
-                <RefundModal
-                    setROpen={setROpen}
-                    project={project}
-                    refund={refund}
-                />
-            )}
         </div>
     )
 }
