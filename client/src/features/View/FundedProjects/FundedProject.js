@@ -1,9 +1,10 @@
-import React, {useState, useEffect, useContext} from 'react'
-import FundModal from '../../components/modals/FundModal'
-import RefundModal from '../../components/modals/RefundModal'
-import { AppContext } from '../../utils/AppContext'
+import React, { useState, useContext, useEffect } from 'react'
+import FundModal from '../../../components/modals/FundModal'
+import RefundModal from '../../../components/modals/RefundModal'
+import { AppContext } from '../../../utils/AppContext'
 
-const MyProject = ({ project, accounts, web3, pIndex }) => {
+const FundedProject = ({ project, accounts, web3, pIndex }) => {
+
     const { projects, setProjects } = useContext(AppContext)
     const [amount, setAmount] = useState(null)
     const [funding, setFunding] = useState(0)
@@ -61,6 +62,14 @@ const MyProject = ({ project, accounts, web3, pIndex }) => {
         })
     }
 
+    const fundedPercentage = (fund) => {
+        let total = Number(project.goalAmount)
+        fund = Number(fund)
+        let p = (fund / total) * 100
+        console.log(p)
+        return p
+    }
+
     return (
         <div className="project-card">
             <div className="top-tile">
@@ -76,6 +85,22 @@ const MyProject = ({ project, accounts, web3, pIndex }) => {
             <p id="deadline">Will be closed on: {getDate(project.deadline)}</p>
             <p id="raised">Amount to be raised:
                 <span><img className="ethIcon" src="https://img.icons8.com/fluent/48/000000/ethereum.png" />{project.goalAmount}</span></p>
+            <p className="your-funds">
+                Your funds: <span><img className="ethIcon" src="https://img.icons8.com/fluent/48/000000/ethereum.png" /></span>{funding}
+            </p>
+            <div className="funding-bar">
+                <div className="cur" style={{ width: `${fundedPercentage(funding)}%` }}>
+                    <p className="lbl">Yours: {Number(funding)} ETH</p>
+                </div>
+                <div className="others"
+                    style={{ width: `${fundedPercentage(Number(project.currentAmount) - Number(funding))}%` }}>
+                    <p className="lbl">Others: {Number(project.currentAmount) - Number(funding)} ETH</p>
+                </div>
+                <div className="blank"
+                    style={{ width: `${fundedPercentage(Number(project.goalAmount) - Number(project.currentAmount))}%` }}>
+                        <p className="lbl">Remaining: {Number(project.goalAmount) - Number(project.currentAmount)} ETH</p>
+                </div>
+            </div>
             <div className={`fund-options ${funding !== 0 ? 'flex' : ''}`}>
                 <button onClick={() => setOpen(true)}>Fund</button>
                 {funding !== 0 && <button onClick={() => setROpen(true)}>Refund</button>}
@@ -101,4 +126,4 @@ const MyProject = ({ project, accounts, web3, pIndex }) => {
     )
 }
 
-export default MyProject
+export default FundedProject

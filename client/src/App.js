@@ -9,9 +9,10 @@ import "./App.css";
 import { AppContext } from "./utils/AppContext";
 import CreateProject from "./features/Create/CreateProject";
 import AllProjects from "./features/View/AllProjects";
-import MyProjects from "./features/Projects/MyProjects"
+import MyProjects from "./features/View/Projects/MyProjects"
 import Page from "./features/LandingPage/Page";
 import Login from "./features/Auth/Login";
+import FundedProjects from "./features/View/FundedProjects/FundedProjects";
 
 const App = () => {
   const [con, setCon] = useState(false)
@@ -116,6 +117,7 @@ const App = () => {
               <Route path="/all" component={AllProjects} />
               <Route path="/create" component={CreateProject} />
               <Route path="/projects/my" component={MyProjects} />
+              <Route path="/projects/funded" component={FundedProjects} />
               <Route path="/login" exact component={Login} />
             </Switch>
           </Router>

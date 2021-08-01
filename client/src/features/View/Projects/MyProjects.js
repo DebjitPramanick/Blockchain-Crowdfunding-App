@@ -1,9 +1,9 @@
 import React, { useContext, useState } from 'react'
-import { AppContext } from '../../utils/AppContext'
-import RightSideBar from '../../components/sidebars/RightSideBar'
-import Project from '../View/Project'
+import { AppContext } from '../../../utils/AppContext'
+import RightSideBar from '../../../components/sidebars/RightSideBar'
+import Project from '../../View/Project'
 import MyProject from './MyProject'
-import Header from '../../components/header/Header'
+import Header from '../../../components/header/Header'
 
 const MyProjects = () => {
 
@@ -52,7 +52,9 @@ const MyProjects = () => {
             setSortingIdx={setSortingIdx} />
           {allProjects.length > 0 ? (
             <div className="cards">
-              {allProjects.map((p, i) => (
+              {allProjects
+              .sort(compare)
+              .map((p, i) => (
                 <MyProject
                   pIndex={i}
                   project={p}

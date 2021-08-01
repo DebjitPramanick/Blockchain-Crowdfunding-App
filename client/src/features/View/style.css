@@ -132,6 +132,74 @@
     background-color: #8747ff;
 }
 
+.funding-bar{
+    display: flex;
+    align-items: center;
+    height: 16px;
+    width: 100%;
+    margin-bottom: 20px;
+    border-radius: 40px;
+    cursor: pointer;
+}
+
+.funding-bar .cur{
+    background-color: #5900ff;
+    height: 100%;
+    border-right: 2px solid #5900ff;
+    border-radius: 40px 0 0 40px;
+    position: relative;
+}
+
+.funding-bar .others{
+    background-color: #868686;
+    height: 100%;
+    border-right: 2px solid #868686;
+    border-left: 2px solid #868686;
+    position: relative;
+}
+
+.funding-bar .blank{
+    background-color: #ff9a9a;
+    height: 100%;
+    border-radius: 0 40px 40px 0;
+    position: relative;
+}
+
+.funding-bar .lbl{
+    position: absolute;
+    display: none;
+    background-color: #fff;
+    padding: 4px;
+    font-size: 12px;
+    bottom: 20px;
+    white-space: nowrap;
+    border-radius: 2px;
+    box-shadow: 0 0 10px #868686;
+}
+
+.your-funds{
+    font-weight: bold;
+    color: #5900ff;
+    text-align: start;
+    font-size: 14px;
+}
+
+.your-funds .ethIcon{
+    margin-bottom: -2px;
+}
+
+.funding-bar .cur:hover .lbl{
+    display: block;
+}
+
+.funding-bar .others:hover .lbl{
+    display: block;
+}
+
+.funding-bar .blank:hover .lbl{
+    display: block;
+}
+
 .no-message{
     color: grey;
 }
