@@ -41,6 +41,6 @@ a{
 
 .tri-div-view{
   display: grid;
-  grid-template-columns: 1fr 4.5fr 1fr;
+  grid-template-columns: 6fr 1fr;
   column-gap: 26px;
 }
