@@ -2,8 +2,7 @@ import React, { useState, useEffect } from "react";
 import Web3 from "web3";
 import CrowdFunding from "./contracts/CrowdFunding.json";
 import Project from "./contracts/Project.json"
-import getWeb3 from "./getWeb3";
-import { BrowserRouter as Router, Redirect, Route, Switch, useHistory } from 'react-router-dom'
+import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom'
 
 import "./App.css";
 import { AppContext } from "./utils/AppContext";
@@ -15,13 +14,11 @@ import Login from "./features/Auth/Login";
 import FundedProjects from "./features/View/FundedProjects/FundedProjects";
 
 const App = () => {
-  const [con, setCon] = useState(false)
   const [web3, setWeb3] = useState(new Web3(window.ethereum))
   const [accounts, setAccounts] = useState([])
   const [contract, setContract] = useState(null)
   const [projects, setProjects] = useState([])
   const [loading, setLoading] = useState(true)
-  const hist = useHistory()
 
   useEffect(() => {
     const connect = async () => {
@@ -48,11 +45,11 @@ const App = () => {
           setContract(instance)
           setLoading(false)
         }
-        else{
+        else {
           setLoading(false)
         }
-      } 
-      
+      }
+
       catch (error) {
         setLoading(false)
         console.error(error);
@@ -83,7 +80,7 @@ const App = () => {
       });
     })
   }
-
+  
   useEffect(() => {
     if (web3 !== undefined
       && accounts !== undefined
@@ -94,7 +91,17 @@ const App = () => {
   }, [web3, accounts, contract])
 
 
-  const values = { setWeb3, setAccounts, setContract, web3, accounts, contract, crowdfundProject, projects, setProjects }
+  const values = {
+    setWeb3,
+    setAccounts,
+    setContract,
+    web3,
+    accounts,
+    contract,
+    crowdfundProject,
+    projects,
+    setProjects
+  }
 
 
   if (typeof web3 === 'undefined') {

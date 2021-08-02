@@ -1,20 +1,14 @@
 import React, { useContext } from 'react'
 import "./style.css"
-import { Link, useHistory } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import MetamaskPNG from "../../assets/metamask.png"
 import AppPNG from "../../assets/app.png"
 import { AppContext } from '../../utils/AppContext'
-import CrowdFunding from "../../contracts/CrowdFunding.json";
-import Project from "../../contracts/Project.json"
-import getWeb3 from "../../getWeb3";
-import { useWallet, UseWalletProvider } from 'use-wallet'
 
 
 const Login = () => {
 
-    const { setWeb3, setAccounts, setContract, web3 } = useContext(AppContext)
-    const wallet = useWallet()
-    const blockNumber = wallet.getBlockNumber()
+    const { web3 } = useContext(AppContext)
 
     const handleConnect = async (e) => {
         e.preventDefault()
@@ -64,13 +58,4 @@ const Login = () => {
     )
 }
 
-export default () => (
-    <UseWalletProvider
-        chainId={1}
-        connectors={{
-            provided: { provider: window.cleanEthereum },
-        }}
-    >
-        <Login />
-    </UseWalletProvider>
-)
+export default Login

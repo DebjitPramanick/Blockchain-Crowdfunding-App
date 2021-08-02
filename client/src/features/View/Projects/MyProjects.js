@@ -1,7 +1,6 @@
 import React, { useContext, useState } from 'react'
 import { AppContext } from '../../../utils/AppContext'
 import RightSideBar from '../../../components/sidebars/RightSideBar'
-import Project from '../../View/Project'
 import MyProject from './MyProject'
 import Header from '../../../components/header/Header'
 
@@ -53,14 +52,14 @@ const MyProjects = () => {
           {allProjects.length > 0 ? (
             <div className="cards">
               {allProjects
-              .sort(compare)
-              .map((p, i) => (
-                <MyProject
-                  pIndex={i}
-                  project={p}
-                  accounts={accounts}
-                  web3={web3} />
-              ))}
+                .sort(compare)
+                .map((p, i) => (
+                  <MyProject
+                    pIndex={i}
+                    project={p}
+                    accounts={accounts}
+                    web3={web3} />
+                ))}
             </div>
           ) : <p className='no-message'>You have not created any project still.</p>}
         </div>

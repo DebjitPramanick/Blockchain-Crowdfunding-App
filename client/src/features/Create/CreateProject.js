@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 
 const CreateProject = (props) => {
 
-    const { accounts, contract, crowdfundProject } = useContext(AppContext)
+    const { web3, accounts, contract, crowdfundProject } = useContext(AppContext)
 
     const [project, setProject] = useState({
         title: '',
@@ -26,7 +26,7 @@ const CreateProject = (props) => {
                 project.title,
                 project.description,
                 project.duration,
-                project.amountGoal
+                web3.utils.toWei(project.amountGoal, 'ether')
             ).send({ from: accounts[0] })
                 .then(res => {
                     const projectInfo = res.events.ProjectStarted.returnValues;

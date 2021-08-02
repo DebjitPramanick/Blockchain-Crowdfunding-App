@@ -26,7 +26,6 @@ const Project = ({ project, accounts, web3, pIndex }) => {
         if (project) {
             getFundingAmount()
         }
-
     }, [])
 
     const fundProject = () => {
@@ -35,7 +34,7 @@ const Project = ({ project, accounts, web3, pIndex }) => {
 
         projectContract.methods.contribute().send({
             from: accounts[0],
-            value: amount,
+            value: web3.utils.toWei(amount, 'ether'),
         }).then(res => {
             const newTotal = parseInt(res.events.FundReceived.returnValues.currentTotal, 10);
             const projectGoal = parseInt(project.goalAmount, 10);
@@ -62,13 +61,19 @@ const Project = ({ project, accounts, web3, pIndex }) => {
         })
     }
 
+    const ethValue = (wei) => {
+        let res = web3.utils.fromWei(wei, 'ether')
+        return res
+    }
+
+
     return (
         <div className="project-card">
             <div className="top-tile">
                 <h3>{project.projectTitle}</h3>
                 <div className="funded">
                     <img className="ethIcon" src="https://img.icons8.com/fluent/48/000000/ethereum.png" />
-                    <p>{project.currentAmount}</p>
+                    <p>{ethValue(project.currentAmount)}</p>
                 </div>
             </div>
 
@@ -76,7 +81,10 @@ const Project = ({ project, accounts, web3, pIndex }) => {
             <p id="desc">{project.projectDesc}</p>
             <p id="deadline">Will be closed on: {getDate(project.deadline)}</p>
             <p id="raised">Amount to be raised:
-                <span><img className="ethIcon" src="https://img.icons8.com/fluent/48/000000/ethereum.png" />{project.goalAmount}</span></p>
+                <span><img className="ethIcon" src="https://img.icons8.com/fluent/48/000000/ethereum.png" />
+                    {ethValue(project.goalAmount)}
+                </span>
+            </p>
             <div className={`fund-options ${funding !== 0 ? 'flex' : ''}`}>
                 <button onClick={() => setOpen(true)}>Fund</button>
                 {funding !== 0 && <button onClick={() => setROpen(true)}>Refund</button>}

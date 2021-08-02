@@ -2,13 +2,12 @@ import React, { useContext, useState, useEffect } from 'react'
 import { AppContext } from '../../../utils/AppContext'
 import "../style.css"
 import RightSideBar from '../../../components/sidebars/RightSideBar'
-import Project from '../Project'
 import Header from '../../../components/header/Header'
 import FundedProject from './FundedProject'
 
 const FundedProjects = () => {
 
-    const { projects, accounts, web3, curUser } = useContext(AppContext)
+    const { projects, accounts, web3 } = useContext(AppContext)
     const [query, setQuery] = useState('')
     const [fundedProjects, setFundedProjects] = useState([])
     const [sortingIdx, setSortingIdx] = useState(0)

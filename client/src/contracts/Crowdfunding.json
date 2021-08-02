@@ -10948,7 +10948,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.0",
-  "updatedAt": "2021-07-25T08:11:24.492Z",
+  "updatedAt": "2021-08-02T02:03:04.574Z",
   "devdoc": {
     "methods": {
       "returnAllProjects()": {

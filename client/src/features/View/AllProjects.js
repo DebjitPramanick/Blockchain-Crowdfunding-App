@@ -7,7 +7,7 @@ import Header from '../../components/header/Header'
 
 const AllProjects = () => {
 
-    const { projects, accounts, web3, curUser } = useContext(AppContext)
+    const { projects, accounts, web3 } = useContext(AppContext)
     const [query, setQuery] = useState('')
     const [sortingIdx, setSortingIdx] = useState(0)
 
