@@ -42,6 +42,7 @@ const RightSideBar = () => {
 
             <ul>
                 <li><button className="disconnect-btn" onClick={handleDisconnect}>Disconnect Wallet</button></li>
+                <li><Link to="/">Home</Link></li>
                 <li><Link to="/all">All Projects</Link></li>
                 <li><Link to="/projects/my">Your Projects</Link></li>
                 <li><Link to="/projects/funded">Funded Projects</Link></li>
