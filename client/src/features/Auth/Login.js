@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import "./style.css"
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 import MetamaskPNG from "../../assets/metamask.png"
 import AppPNG from "../../assets/app.png"
 import { AppContext } from '../../utils/AppContext'
@@ -8,7 +8,7 @@ import { AppContext } from '../../utils/AppContext'
 
 const Login = () => {
 
-    const { web3 } = useContext(AppContext)
+    const { web3, accounts } = useContext(AppContext)
 
     const handleConnect = async (e) => {
         e.preventDefault()
@@ -25,6 +25,10 @@ const Login = () => {
         localStorage.setItem('cacheKey', ad)
         localStorage.setItem('cacheNID', networkId)
         window.location.href = "/all"
+    }
+
+    if(accounts.length > 0){
+        return <Redirect to="/all" />
     }
 
     return (

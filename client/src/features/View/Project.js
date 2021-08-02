@@ -97,7 +97,9 @@ const Project = ({ project, accounts, web3, pIndex }) => {
                     amount={amount}
                     fund={fundProject}
                     desc={project.projectDesc}
-                    title={project.projectTitle} />}
+                    title={project.projectTitle}
+                    targetAmt={project.goalAmount}
+                    curAmt={project.currentAmount} />}
 
             {rOpen && (
                 <RefundModal

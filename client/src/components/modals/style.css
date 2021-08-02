@@ -75,3 +75,13 @@
     color: #e75410;
     text-align: start;
 }
+
+.fund-modal{
+    color: grey;
+    font-size: 12px;
+}
+
+.fund-modal span{
+    color: #5900ff;
+    font-weight: bold;
+}

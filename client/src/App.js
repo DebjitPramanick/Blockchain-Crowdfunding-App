@@ -64,6 +64,21 @@ const App = () => {
     return instance
   }
 
+  const isExpired = (project) => {
+    let d = new Date().setUTCHours(0, 0, 0, 0) / 1000
+    let pd = Number(project.deadline)
+    if(d<=pd) return false
+    else return true
+  }
+
+  const isComplete = (project) => {
+    let a1 = Number(project.currentAmount)
+    let a2 = Number(project.goalAmount)
+    console.log(a1, a2)
+    if(a1===a2) return true
+    else return false
+  }
+
   const getAllProjects = () => {
 
     contract.methods.returnAllProjects().call().then((pr) => {
@@ -71,16 +86,18 @@ const App = () => {
         const projectInst = crowdfundProject(projectAddress);
         await projectInst.methods.getInfo().call()
           .then((projectData) => {
-            console.log(projectData)
             const projectInfo = projectData;
             projectInfo.isLoading = false;
             projectInfo.contract = projectInst;
-            setProjects(p => [...p, projectInfo])
+            if (!isExpired(projectInfo) && !isComplete(projectInfo)) {
+              setProjects(p => [...p, projectInfo])
+            }
+
           })
       });
     })
   }
-  
+
   useEffect(() => {
     if (web3 !== undefined
       && accounts !== undefined

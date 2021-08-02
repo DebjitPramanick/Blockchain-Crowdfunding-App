@@ -59,7 +59,7 @@ const CreateProject = (props) => {
                         </div>
 
                         <div className="ip-fields">
-                            <input placeholder="Goal Amount (wei)"
+                            <input placeholder="Goal Amount (ETH)"
                                 value={project.amountGoal}
                                 onChange={(e) => setProject({ ...project, amountGoal: e.target.value })} />
 
