@@ -1,9 +1,11 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import "./style.css"
 import { Link } from 'react-router-dom'
 import IMAGE from "../../assets/img.png"
+import { AppContext } from '../../utils/AppContext';
 
 const Page = () => {
+    const {web3, accounts} = useContext(AppContext)
     return (
         <div className="landing-page-container">
             <div className="navs">
@@ -13,7 +15,10 @@ const Page = () => {
                 </div>
                 <div className="links">
                     <Link to="/all">All Projects</Link>
-                    <Link to="/login" className="login-btn">Login</Link>
+                    {accounts.length === 0 ? (
+                        <Link to="/login" className="login-btn">Login</Link>
+                    ) : <Link to="/projects/my" className="login-btn">Your Projects</Link>}
+                    
                 </div>
             </div>
 

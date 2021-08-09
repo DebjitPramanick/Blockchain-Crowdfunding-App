@@ -35,9 +35,7 @@ const RightSideBar = () => {
                         <p>{accounts[0]}</p>
                         <p className="balance">{balance} ETH</p>
                     </div>
-                    
                 </div>
-                
             </div>
 
             <ul>

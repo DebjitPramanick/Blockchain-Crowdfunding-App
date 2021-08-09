@@ -20,6 +20,8 @@ const App = () => {
   const [projects, setProjects] = useState([])
   const [loading, setLoading] = useState(true)
 
+  console.log(projects)
+
   useEffect(() => {
     const connect = async () => {
       const pk = localStorage.getItem('cacheKey')
@@ -72,11 +74,8 @@ const App = () => {
   }
 
   const isComplete = (project) => {
-    let a1 = Number(project.currentAmount)
-    let a2 = Number(project.goalAmount)
-    console.log(a1, a2)
-    if(a1===a2) return true
-    else return false
+    if(project.currentState === '2') return true
+    return false
   }
 
   const getAllProjects = () => {

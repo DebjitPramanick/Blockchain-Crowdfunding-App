@@ -66,7 +66,6 @@ const FundedProject = ({ project, accounts, web3, pIndex }) => {
         let total = Number(project.goalAmount)
         fund = Number(fund)
         let p = (fund / total) * 100
-        console.log(p)
         return p
     }
 
@@ -75,10 +74,8 @@ const FundedProject = ({ project, accounts, web3, pIndex }) => {
         return res
     }
     const getDiff = (w1, w2) => {
-        console.log(w1, w2)
         w1 = Math.floor(Number(web3.utils.fromWei(w1, 'ether')))
         w2 = Math.floor(Number(web3.utils.fromWei(w2, 'ether')))
-        console.log(w1, w2, Math.abs(w1-w2))
         return Math.abs(w1-w2)
     }
 
@@ -127,7 +124,9 @@ const FundedProject = ({ project, accounts, web3, pIndex }) => {
                     amount={amount}
                     fund={fundProject}
                     desc={project.projectDesc}
-                    title={project.projectTitle} />}
+                    title={project.projectTitle}
+                    targetAmt={project.goalAmount}
+                    curAmt={project.currentAmount} />}
 
             {rOpen && (
                 <RefundModal
