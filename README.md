@@ -1,9 +1,9 @@
 <h1 align="center">Crowdfunding Web App</h1>
   <p align="center">
     A basic crowdfunding web app with ethereum blockchain.    <br />
-    <a href="https://github.com/DebjitPramanick/Distributed-File-Storage/issues">Report Bug</a>
+    <a href="https://github.com/DebjitPramanick/Blockchain-Crowdfunding-App/issues">Report Bug</a>
     ·
-    <a href="https://github.com/DebjitPramanick/Distributed-File-Storage/issues">Request Feature</a>
+    <a href="https://github.com/DebjitPramanick/Blockchain-Crowdfunding-App/issues">Request Feature</a>
   </p>
 </p>
 
