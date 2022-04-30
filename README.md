@@ -72,7 +72,7 @@ This things must be installed as an extension in your browser.
    https://github.com/DebjitPramanick/Blockchain-Crowdfunding-App
    ```
 2. Open the project folder
-3. Install NPM
+3. Install NPM Packages
 	```sh
    npm i
    ```
