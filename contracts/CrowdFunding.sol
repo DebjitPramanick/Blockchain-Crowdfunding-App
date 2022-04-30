@@ -2,7 +2,7 @@ pragma solidity >=0.4.21 <0.7.0;
 
 import "@openzeppelin/contracts/math/SafeMath.sol";
 
-contract Crowdfunding {
+contract CrowdFunding {
     using SafeMath for uint256;
 
     // List of existing projects

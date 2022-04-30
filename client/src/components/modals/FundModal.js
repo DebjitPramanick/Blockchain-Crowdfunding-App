@@ -13,7 +13,7 @@ const FundModal = (props) => {
         return res
     }
     const canFund = ethValue(targetAmt) - ethValue(curAmt)
-
+    
     return (
         <div className="modal-container">
             <div className="modal-box">

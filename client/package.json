@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@material-ui/core": "^4.12.4",
+    "@material-ui/icons": "^4.11.3",
     "@truffle/hdwallet-provider": "^1.4.2",
     "react": "16.11.0",
     "react-dom": "16.11.0",
