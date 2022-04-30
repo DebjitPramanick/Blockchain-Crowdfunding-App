@@ -74,7 +74,7 @@ This things must be installed as an extension in your browser.
 2. Open the project folder
 3. Install NPM Packages
 	```sh
-   npm i
+   npm i @openzeppelin/contracts@2.5.1
    ```
 4. Now run Ganache
 5. Now type in the command in terminal
@@ -85,7 +85,11 @@ This things must be installed as an extension in your browser.
     ```sh
    cd client
    ```
-7. Now start the client application
+7. Intsall NPM Packages for client
+   ```sh
+   npm i
+   ```
+9. Now start the client application
     ```sh
    npm start
    ```
