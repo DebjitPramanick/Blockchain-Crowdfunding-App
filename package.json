@@ -1,0 +1,25 @@
+{
+  "name": "blockchain-crowdfunding-app",
+  "version": "1.0.0",
+  "description": "<h1 align=\"center\">Crowdfunding Web App</h1>\r   <p align=\"center\">\r     A basic crowdfunding web app with ethereum blockchain.    <br />\r     <a href=\"https://github.com/DebjitPramanick/Blockchain-Crowdfunding-App/issues\">Report Bug</a>\r     ·\r     <a href=\"https://github.com/DebjitPramanick/Blockchain-Crowdfunding-App/issues\">Request Feature</a>\r   </p>\r </p>",
+  "main": "truffle-config.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DebjitPramanick/Blockchain-Crowdfunding-App.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DebjitPramanick/Blockchain-Crowdfunding-App/issues"
+  },
+  "homepage": "https://github.com/DebjitPramanick/Blockchain-Crowdfunding-App#readme",
+  "dependencies": {
+    "@openzeppelin/contracts": "^2.5.1"
+  }
+}
